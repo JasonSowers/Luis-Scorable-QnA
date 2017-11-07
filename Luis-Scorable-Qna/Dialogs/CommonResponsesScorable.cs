@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
-using System.Web;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Dialogs.Internals;
 using Microsoft.Bot.Builder.Internals.Fibers;
@@ -12,8 +8,6 @@ using Microsoft.Bot.Connector;
 
 namespace Scorable.Dialogs
 {
-
-
     public partial class CommonResponsesScorable : ScorableBase<IActivity, string, double>
     {
         private readonly IDialogTask task;
@@ -65,6 +59,7 @@ namespace Scorable.Dialogs
             {
                 var incomingMessage = message.Text.ToLowerInvariant();
                 var messageToSend = string.Empty;
+
                 if (incomingMessage.Contains("help"))
                 {
                     var commonResponsesDialog = new CommonResponsesDialog((Activity)message);
@@ -83,10 +78,6 @@ namespace Scorable.Dialogs
                     var commonResponsesDialog = new CommonResponsesDialog(messageToSend);
                      interruption = commonResponsesDialog.Void<object, IMessageActivity>();
                 }
-
-
-
-
                 this.task.Call(interruption, null);
                 await this.task.PollAsync(token);
             }

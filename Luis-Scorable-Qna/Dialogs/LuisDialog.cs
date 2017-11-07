@@ -15,8 +15,6 @@ namespace Scorable.Dialogs
     [LuisModel("e7a9c2d5-0b92-47d3-9d73-d35fb45c1b8e", "4941fa348c49494db1e8e8d2fd7adb2c")]
     public class LuisDialog : LuisDialog<object>
     {
-        private object dummyactivity;
-
         [LuisIntent("")]
         [LuisIntent("None")]
         public async Task None(IDialogContext context, LuisResult result)
@@ -62,7 +60,7 @@ namespace Scorable.Dialogs
 
             await context.PostAsync(message);
 
-            await context.Forward(new JokeDialog(), ResumeAfterJokeDialog, dummyactivity, CancellationToken.None);
+            await context.Forward(new JokeDialog(), ResumeAfterJokeDialog, context.Activity, CancellationToken.None);
         }
 
         [LuisIntent("question")]
@@ -70,15 +68,10 @@ namespace Scorable.Dialogs
         {
             // confirm we hit QnA
             string message = $"Routing to QnA... ";
-
-            var userQuestion = (context.Activity as Activity).Text;
-            await context.Forward(new QnaDialog(), ResumeAfterQnA, context.Activity, CancellationToken.None);
             await context.PostAsync(message);
 
-            //context.Wait(this.MessageReceived);
-            // await context.Forward(new JokeDialog(), ResumeAfterJokeDialog, activity, CancellationToken.None);
-            //await Conversation.SendAsync(activity, () => new QnaDialog());
-            
+            var userQuestion = (context.Activity as Activity).Text;
+            await context.Forward(new QnaDialog(), ResumeAfterQnA, context.Activity, CancellationToken.None);       
         }
 
         private async Task ResumeAfterQnA(IDialogContext context, IAwaitable<object> result)

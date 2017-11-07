@@ -15,8 +15,5 @@ namespace Scorable.Dialogs
         public QnaDialog(): base(new QnAMakerService(new QnAMakerAttribute(ConfigurationManager.AppSettings["QnaSubscriptionKey"], ConfigurationManager.AppSettings["QnaKnowledgebaseId"], "Hmm, I wasn't able to find an article about that. Can you try asking in a different way?", 0.5)))
         {
         }
-
-
-
     }
 }
