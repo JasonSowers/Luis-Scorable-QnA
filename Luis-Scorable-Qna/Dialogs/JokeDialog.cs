@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Bot.Builder.Dialogs;
@@ -12,10 +13,16 @@ namespace Scorable.Dialogs
         public Task StartAsync(IDialogContext context)
         {
             // Confirmation that we're in the JokeDialog, forwarded from the LUIS dialog
-            string message = $"Knock Knock, who's there?";
+            string response = string.Empty;
+            using (var client = new WebClient())
+            {
+                response = client.DownloadString($"http://numbersapi.com/random/math");
+            }
+            string message = response;
             context.PostAsync(message);
 
-            context.Wait(MessageReceivedAsync);
+
+            context.Done<object>(null);
 
             return Task.CompletedTask;
         }
