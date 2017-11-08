@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Web.Http;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Luis;
 using Microsoft.Bot.Builder.Luis.Models;
@@ -12,7 +9,7 @@ using System.Threading;
 namespace Scorable.Dialogs
 {
     [Serializable]
-    [LuisModel("e7a9c2d5-0b92-47d3-9d73-d35fb45c1b8e", "4941fa348c49494db1e8e8d2fd7adb2c")]
+    [LuisModel("YourLuisAppID", "YourLuisAppPassword")]
     public class LuisDialog : LuisDialog<object>
     {
         [LuisIntent("")]
@@ -20,6 +17,8 @@ namespace Scorable.Dialogs
         public async Task None(IDialogContext context, LuisResult result)
         {
             string message = $"Sorry, I did not understand '{result.Query}'. Type 'help' if you need assistance.";
+
+            // alternatively, you could forward to QnA Dialog if no intent is found
 
             await context.PostAsync(message);
 

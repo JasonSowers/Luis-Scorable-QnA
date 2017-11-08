@@ -8,8 +8,6 @@ using Microsoft.Bot.Connector;
 
 namespace Scorable.Dialogs
 {
-
-
     public class CommonResponsesDialog : IDialog<object>
     {
         private readonly string _messageToSend;
@@ -26,15 +24,17 @@ namespace Scorable.Dialogs
             var heroCard = new HeroCard
             {
                 Title = "Help",
-                Text = "Some Text Here",
-                Buttons = new List<CardAction> { new CardAction(ActionTypes.OpenUrl, "Get Started", value: "https://docs.microsoft.com/bot-framework") }
+                Text = "Need assisstance?",
+                Buttons = new List<CardAction> {
+                    new CardAction(ActionTypes.OpenUrl, "Contact Us", value: "https://stackoverflow.com/questions/tagged/botframework"),
+                    new CardAction(ActionTypes.OpenUrl, "FAQ", value: "https://docs.microsoft.com/bot-framework")
+                }
             };
             var reply = activity.CreateReply();
-            var attachments = new List<Attachment>();
-            attachments.Add(heroCard.ToAttachment());
-            reply.Attachments = attachments;
-            _activity = reply;
 
+            reply.Attachments.Add(heroCard.ToAttachment());
+
+            _activity = reply;
         }
 
         public async Task StartAsync(IDialogContext context)

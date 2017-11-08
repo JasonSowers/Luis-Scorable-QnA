@@ -28,7 +28,8 @@ namespace Scorable.Dialogs
                 if (msg == "hello" || msg == "thank you" || msg == "goodbye")
                 {
                     return message.Text;
-                }else if (msg.Contains("help"))
+                }
+                else if (msg.Contains("help"))
                 {
                     return message.Text;
                 }
